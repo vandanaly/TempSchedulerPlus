@@ -1,7 +1,8 @@
 # TempSchedPlus
-URL: https://tempschedplus-dashboard.onrender.com/
 
 Intelligent temperature-aware storage management across device, edge, and cloud.
+
+URL: https://tempschedplus-dashboard.onrender.com/
 
 ## Project Objectives
 1. **Cold Data Compression**: Reduces storage space using algorithms like GZIP or Zstandard before archival.
