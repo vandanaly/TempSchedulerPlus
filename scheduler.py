@@ -48,6 +48,14 @@ def classify_temperature(temp: float, hot_thresh: float, warm_thresh: float):
 
 def _device_files():
     paths = [path for path in sorted(config.DEVICE.iterdir()) if path.is_file()]
+    
+    # FIX: Tell the scheduler to process your .env SCAN_PATHS
+    if hasattr(config, "SCAN_PATHS"):
+        for folder_str in config.SCAN_PATHS:
+            folder_path = Path(folder_str)
+            if folder_path.exists():
+                paths.extend([p for p in folder_path.iterdir() if p.is_file()])
+                
     max_files = int(getattr(config, "SCHEDULER_MAX_FILES", 0) or 0)
     if max_files > 0:
         return paths[:max_files]
@@ -71,7 +79,7 @@ def schedule():
             last_access,
             metadata.st_size,
             store=store,
-            persist=False,
+            persist=True,  # CRITICAL FIX: Save the data so the AI can read it
         )
         temperature_store[path.name] = temp
         forecast_inputs.append(
